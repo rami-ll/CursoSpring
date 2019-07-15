@@ -1,0 +1,3 @@
+cargar valores en una tupla, usar hashmap, sobreescrbir el equals (compare)
+ver como validar el dia
+generar el la medicion del clima en intervalos de tiempo
