@@ -2,6 +2,7 @@ package calculador;
 
 import sensorclima.TipoClima;
 import sensorvelocidad.DatosVehiculo;
+import status.StatusController;
 import model.*;
 
 public class CalculadorMultas {
@@ -28,15 +29,18 @@ public class CalculadorMultas {
 				limite = moto.getLimiteVelocidad(clima);
 				break;
 		}
-		float exceso = (vehiculo.velocidadMedida/limite) - 1;
+		float exceso = (vehiculo.velocidadMedida/limite);
+		if(StatusController.esDomingo()) {
+			exceso += 0.1;
+			System.out.println("Es domingo hay tolerancia del 10%");
+		}
 		System.out.println(String.format("Limite: %f", limite));
 		System.out.println("Exceso: " + exceso);
-		if (exceso > 0) {
-			if(exceso > 0.1 && exceso < 0.2) {
-				montoMulta = 1000;
-			} if (exceso > 0.2) {
-				montoMulta = 5000;
-			}
+		if(exceso > 1.1) {
+			montoMulta = 1000;
+		} 
+		if (exceso > 1.2) {
+			montoMulta = 5000;
 		}
 		return montoMulta;
 	}
