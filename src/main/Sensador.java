@@ -1,14 +1,17 @@
 package main;
 import calculador.CalculadorMultas;
+import persistencia.GeneradorTicketFileJson;
 import sensorclima.*;
 import sensorvelocidad.*;
 import status.StatusController;
 
-public class Main {
+public class Sensador {
 
 	public static void main(String[] args) {
 		
 		StatusController controller = new StatusController();
+		CalculadorMultas calculador = controller.getCalculadorIntance();
+		calculador.agregarGenerador(new GeneradorTicketFileJson());
 		
 		DatosVehiculo datos;
 		TipoClima clima;		
@@ -21,7 +24,7 @@ public class Main {
 			System.out.println(datos.velocidadMedida);
 			System.out.println(datos.tipoVehiculo.toString());
 			System.out.println("Monto: " +
-					CalculadorMultas.calcularMulta(datos, clima));
+					calculador.calcularMulta(datos, clima));
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {

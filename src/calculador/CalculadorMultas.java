@@ -1,18 +1,25 @@
 package calculador;
 
 import sensorclima.TipoClima;
+import persistencia.*;
 import sensorvelocidad.DatosVehiculo;
 import status.StatusController;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import model.*;
 
 public class CalculadorMultas {
 	
-	private static Auto auto = new Auto();
-	private static Moto moto = new Moto();
-	private static Camion camion = new Camion();
-	private static Tractor tractor = new Tractor();
+	private Auto auto = new Auto();
+	private Moto moto = new Moto();
+	private Camion camion = new Camion();
+	private Tractor tractor = new Tractor();
+	private List<IGeneradorTicket> generadores = new ArrayList<>();
 	
-	public static int calcularMulta(DatosVehiculo vehiculo, TipoClima clima) {
+	public int calcularMulta(DatosVehiculo vehiculo, TipoClima clima) {
 		int montoMulta = 0;
 		float limite = 0;
 		switch (vehiculo.tipoVehiculo) {
@@ -30,7 +37,7 @@ public class CalculadorMultas {
 				break;
 		}
 		float exceso = (vehiculo.velocidadMedida/limite);
-		if(StatusController.esDomingo()) {
+		if(StatusController.esDomingo(new Date())) {
 			exceso += 0.1;
 			System.out.println("Es domingo hay tolerancia del 10%");
 		}
@@ -42,7 +49,20 @@ public class CalculadorMultas {
 		if (exceso > 1.2) {
 			montoMulta = 5000;
 		}
+		if (montoMulta > 0) {
+			enviarTicket(montoMulta, vehiculo.patente);
+		}
 		return montoMulta;
+	}
+	
+	private void enviarTicket(int monto, String placa) {
+		Ticket t = new Ticket(monto, placa, new Date());
+		generadores.forEach((IGeneradorTicket gen) -> 
+									gen.generarTicket(t));		
+	}
+	
+	public void agregarGenerador(IGeneradorTicket generadorNuevo) {
+		generadores.add(generadorNuevo);
 	}
 
 }
