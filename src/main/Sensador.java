@@ -4,8 +4,10 @@ import persistencia.GeneradorTicketFileJson;
 import sensorclima.*;
 import sensorvelocidad.*;
 import status.StatusController;
+import org.springframework.*;
 
 public class Sensador {
+
 
 	public static void main(String[] args) {
 		

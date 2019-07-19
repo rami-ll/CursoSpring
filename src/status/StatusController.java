@@ -6,6 +6,8 @@ import java.util.Date;
 import calculador.CalculadorMultas;
 import sensorclima.TipoClima;
 import sensorvelocidad.DatosVehiculo;
+import org.springframework.*;
+
 
 public class StatusController {
 	

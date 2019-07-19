@@ -60,8 +60,5 @@ public class Ticket {
 		this.fecha = fecha;
 	}
 	
-
-
-
 	
 }
