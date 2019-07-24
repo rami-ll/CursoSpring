@@ -3,10 +3,13 @@ package persistencia;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
+import org.springframework.stereotype.Component;
+
 import jdk.nashorn.internal.runtime.Context.ThrowErrorManager;
 import model.Ticket;
 import com.google.gson.Gson;
 
+@Component
 public class GeneradorTicketFileJson implements IGeneradorTicket{
 
 	private final String savePath = "C:\\tickets\\";
